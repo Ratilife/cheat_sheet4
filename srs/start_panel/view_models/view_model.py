@@ -1,3 +1,5 @@
+from typing import List
+
 from PySide6.QtCore import QObject, Signal
 
 class ButtonViewModel(QObject):
@@ -46,5 +48,6 @@ class ButtonViewModel(QObject):
         """
         self._model.save_buttons()
 
-    def remove_button_list(self, list):
-        self._model.remove_button_list(list)
+    def remove_button_list(self, indices: List[int]):
+        self._model.remove_button_list(indices)  # Передаём индексы в модель
+        self.buttonsChanged.emit()

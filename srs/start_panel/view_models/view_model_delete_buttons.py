@@ -29,10 +29,20 @@ class DeleteButtonsViewModel(QObject):
         Возвращает список имен кнопок, которые были отмечены для удаления.
         """
         return self._delete_model.get_selected_buttons()
-    
+
+    def get_selected_indices(self) -> List[int]:
+        # Возвращает индексы выбранных кнопок, а не их имена
+        selected_indices = []
+        for i in range(self.table.rowCount()):
+            checkbox = self.table.cellWidget(i, 1)
+            if checkbox.isChecked():
+                selected_indices.append(i)
+        return selected_indices
     def get_selected_buttons_index(self) -> List[str]:
         # возможно удалить
         return self._delete_model.get_selected_buttons_index()
+
+
 
     #описать метод на удаление 
     def remove_button_list(self,list):

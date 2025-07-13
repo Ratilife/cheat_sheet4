@@ -1,5 +1,6 @@
 from typing import List
 from abc import ABC, abstractmethod
+from srs.start_panel.models.model import IButtonModel
 from PySide6.QtCore import QObject, Signal
 
 
@@ -12,8 +13,9 @@ class IButtonViewModel(ABC):
 
     @abstractmethod
     def execute_program(self, index: int): ...
+
 class ButtonViewModel(QObject,  IButtonViewModel):
-    def __init__(self, model):
+    def __init__(self, model: IButtonModel):
         super().__init__()
         self._model = model  # Ссылка на Model
 

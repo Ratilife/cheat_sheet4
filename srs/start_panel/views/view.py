@@ -4,13 +4,12 @@ from PySide6.QtCore import QByteArray, QBuffer, QIODevice, QSize, Qt, QPoint
 from srs.start_panel.models.model import ButtonListModel
 from srs.start_panel.views.view_delete_buttons import DeleteButtonsDialog
 from srs.start_panel.view_models.view_model_delete_buttons import DeleteButtonsViewModel
-from  srs.start_panel.models.model_delete_buttons import DeleteButtonsModel
-from srs.start_panel.view_models.view_model import ButtonViewModel
+from srs.start_panel.view_models.view_model import ButtonViewModel, IButtonViewModel
 import base64
 import sys
 
 class MainWindow(QMainWindow):
-    def __init__(self, view_model):
+    def __init__(self, view_model: IButtonViewModel):
 
         """
             Инициализация главного окна панели управления кнопками.

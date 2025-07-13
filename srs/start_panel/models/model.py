@@ -1,8 +1,25 @@
 import os
 import json
 from dataclasses import dataclass
-from typing import List
+from typing import List, Dict
+from abc import ABC, abstractmethod
 
+# Интерфейс для Model
+class IButtonModel(ABC):
+    @abstractmethod
+    def get_buttons(self) -> List['ButtonModel']: ...
+
+    @abstractmethod
+    def add_button(self, name: str, path: str): ...
+
+    @abstractmethod
+    def remove_button(self, index: int): ...
+
+    @abstractmethod
+    def save_buttons(self): ...
+
+    @abstractmethod
+    def load_buttons(self): ...
 
 @dataclass
 class ButtonModel:
@@ -13,7 +30,7 @@ class ButtonModel:
     name: str  # Название кнопки
     path: str  # Путь к программе
 
-class ButtonListModel:
+class ButtonListModel(IButtonModel):
     '''
     Этот класс управляет списком кнопок. Он предоставляет методы для добавления новой кнопки (add_button), 
     получения списка всех кнопок (get_buttons) и получения конкретной кнопки по индексу (get_button).

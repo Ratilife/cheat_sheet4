@@ -22,38 +22,54 @@ class DeleteButtonsDialog(QDialog):
         # Основной layout
         layout = QVBoxLayout(self)                  # Создание вертикального layout для размещения элементов
 
-        # Таблица для отображения кнопок
+        # 1. Таблица для кнопок
         self.table = QTableWidget()                                         # Создание таблицы
         self.table.setColumnCount(2)                                        # Установка количества колонок
         self.table.setHorizontalHeaderLabels(["Имя кнопки", "Удалить"])     # Установка заголовков колонок
-        self.table.setRowCount(len(self.view_model.get_buttons()))          # Установка количества строк в таблице
+        self.table.setSelectionBehavior(QTableWidget.SelectRows)
+        self.table.horizontalHeader().setStretchLastSection(True)
 
-        # Заполнение таблицы
-        for i, button in enumerate(self.view_model.get_buttons()):          # Перебор кнопок из модели представления
-            # 1. Ячейка с именем кнопки
-            name_item = QTableWidgetItem(button.name)  # Используем button.name вместо button["name"]
+        # 2. Кнопки управления
+        button_layout = QHBoxLayout()
+        ok_button = QPushButton("OK")
+        ok_button.clicked.connect(self.accept)
+        cancel_button = QPushButton("Отмена")
+        cancel_button.clicked.connect(self.reject)
+
+        # Сборка интерфейса
+        button_layout.addWidget(ok_button)
+        button_layout.addWidget(cancel_button)
+        layout.addWidget(self.table)
+        layout.addLayout(button_layout)
+
+        # Инициализация данных
+        self.update_table()
+        self.view_model.selection_changed.connect(self.update_table)
+
+    def update_table(self):
+        """Обновляет содержимое таблицы"""
+        self.table.setRowCount(0)  # Очищаем перед обновлением
+
+        buttons = self.view_model.get_all_buttons()
+        self.table.setRowCount(len(buttons))
+
+        for i, name in enumerate(buttons):
+            # Ячейка с именем
+            name_item = QTableWidgetItem(name)
             name_item.setFlags(name_item.flags() & ~Qt.ItemIsEditable)
             self.table.setItem(i, 0, name_item)
 
-            # 2. Чекбокс для выбора
+            # Чекбокс
             checkbox = QCheckBox()
+            checkbox.setChecked(name in self.view_model.get_selected_buttons())
             checkbox.stateChanged.connect(
-                lambda state, name=button.name: self._on_checkbox_state_changed(state, name)  # Используем button.name
+                lambda state, n=name: self.view_model.toggle_selection(n)
             )
             self.table.setCellWidget(i, 1, checkbox)
 
-        layout.addWidget(self.table)
-
-        # Кнопки "ОК" и "Отмена"
-        button_layout = QHBoxLayout()                                       # Создание горизонтального layout для кнопок
-        ok_button = QPushButton("OK")                                       # Создание кнопки "ОК"
-        ok_button.clicked.connect(self.on_ok_clicked)                       # Подключение сигнала нажатия к методу принятия
-        cancel_button = QPushButton("Отмена")                               # Создание кнопки "Отмена"
-        cancel_button.clicked.connect(self.reject)                          # Подключение сигнала нажатия к методу отклонения                
-        button_layout.addWidget(ok_button)                                  # Добавление кнопки "ОК" в layout
-        button_layout.addWidget(cancel_button)                              # Добавление кнопки "Отмена" в layout
-        layout.addLayout(button_layout)                                     # Добавление кнопок в основной layout
- 
+    def get_selected_buttons(self) -> List[str]:
+        """Возвращает выбранные для удаления кнопки"""
+        return self.view_model.get_selected_buttons()   # Возвращает список выбранных кнопок
     def _on_checkbox_state_changed(self, state: int, name: str):
         """
         Обрабатывает изменение состояния чекбокса.
@@ -64,13 +80,8 @@ class DeleteButtonsDialog(QDialog):
         is_selected = state == 2  # True, если чекбокс отмечен, иначе False
         self.view_model.set_selected(name, is_selected)
 
-    def get_selected_buttons(self):
-        return self.view_model.get_selected_buttons()  # Возвращает список выбранных кнопок
     
     def on_ok_clicked(self):
-       
-       #list = self.view_model.get_selected_buttons_index()                        # Вызов метода модели представления для получения выбранных кнопок
-       #self.view_model.remove_button_list(list)                             # Вызов метода модели представления для удаления выбранных кнопок
        self.accept()
                  
     

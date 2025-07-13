@@ -1,8 +1,18 @@
 from typing import List
-
+from abc import ABC, abstractmethod
 from PySide6.QtCore import QObject, Signal
 
-class ButtonViewModel(QObject):
+
+class IButtonViewModel(ABC):
+    @abstractmethod
+    def get_buttons(self) -> List['ButtonModel']: ...
+
+    @abstractmethod
+    def add_button(self, name: str, path: str): ...
+
+    @abstractmethod
+    def execute_program(self, index: int): ...
+class ButtonViewModel(QObject,  IButtonViewModel):
     def __init__(self, model):
         super().__init__()
         self._model = model  # Ссылка на Model

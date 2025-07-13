@@ -1,13 +1,13 @@
-from typing import Dict, List
+from typing import Dict, List, Set
 from PySide6.QtCore import QObject, Signal
-from srs.start_panel.models.model_delete_buttons import DeleteButtonsModel
 from srs.start_panel.models.model import ButtonModel
 
 class DeleteButtonsViewModel(QObject):
     def __init__(self, model):
         super().__init__()
         self._model = model  # Ссылка на ButtonListModel (model)
-        self._delete_model = DeleteButtonsModel(model)  # Создаем DeleteButtonsModel (model_delete_buttons)
+        #self._delete_model = DeleteButtonsModel(model)  # Создаем DeleteButtonsModel (model_delete_buttons)
+        self._selected_buttons: Set[str] = set()  # Храним имена выбранных кнопок
     # Сигнал для уведомления View об изменении данных
     buttonsUpdated = Signal()
 
@@ -17,18 +17,23 @@ class DeleteButtonsViewModel(QObject):
         """
         return self._model.get_buttons()
 
-    def set_selected(self, name: str, selected: bool):
-        """
-        Устанавливает отметку для кнопки.
-        """
-        self._delete_model.set_selected(name, selected)
-        self.buttonsUpdated.emit()
+    def toggle_selection(self, name: str):
+        """Переключает состояние выбора кнопки"""
+        if name in self._selected_buttons:
+            self._selected_buttons.remove(name)
+        else:
+            self._selected_buttons.add(name)
+        self.selection_changed.emit()  # Уведомляем View об изменении
 
     def get_selected_buttons(self) -> List[str]:
-        """
-        Возвращает список имен кнопок, которые были отмечены для удаления.
-        """
-        return self._delete_model.get_selected_buttons()
+        """Возвращает имена выбранных кнопок"""
+        return list(self._selected_buttons)
+
+    def get_all_buttons(self) -> List[str]:
+        """Возвращает все имена кнопок (для отображения в UI)"""
+        return [button.name for button in self._model.get_buttons()]
+
+
 
     def get_selected_indices(self) -> List[int]:
         # Возвращает индексы выбранных кнопок, а не их имена

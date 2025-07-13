@@ -14,9 +14,13 @@ class IButtonViewModel(ABC):
     @abstractmethod
     def execute_program(self, index: int): ...
 
-class ButtonViewModel(QObject,  IButtonViewModel):
+# Создаем комбинированный метакласс, который объединяет QObject и ABC
+class MetaQObjectABC(type(QObject), ABC):
+    pass
+
+class ButtonViewModel(IButtonViewModel, QObject,  metaclass=MetaQObjectABC):
     def __init__(self, model: IButtonModel):
-        super().__init__()
+        QObject.__init__(self)
         self._model = model  # Ссылка на Model
 
     # Сигнал для уведомления View об изменении данных

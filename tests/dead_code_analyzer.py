@@ -24,11 +24,11 @@ class DeadCodeAnalyzer:
         """Анализирует весь проект, начиная с указанной директории"""
         project_dir = os.path.abspath(project_dir)
         py_files = self._find_py_files(project_dir)
-        
+
         # Первый проход: сбор экспортов и импортов
         for filepath in py_files:
             self._analyze_exports_and_imports(filepath, project_dir)
-        
+
         # Второй проход: анализ использования
         for filepath in py_files:
             self._analyze_usage(filepath)
@@ -42,11 +42,20 @@ class DeadCodeAnalyzer:
                     py_files.append(os.path.join(root, file))
         return py_files
 
+    def _add_parent_links(self, node: ast.AST, parent: Optional[ast.AST] = None):
+        """Добавляет ссылки на родительские узлы в AST"""
+        node.parent = parent  # type: ignore
+        for child in ast.iter_child_nodes(node):
+            self._add_parent_links(child, node)
+
     def _analyze_exports_and_imports(self, filepath: str, project_dir: str):
         """Анализирует экспорты и импорты в файле"""
         with open(filepath, 'r', encoding='utf-8') as file:
             tree = ast.parse(file.read(), filename=filepath)
-        
+
+        # Добавляем ссылки на родительские узлы
+        self._add_parent_links(tree)
+
         self.file_exports[filepath] = set()
         self.file_imports[filepath] = {}
         self.defined_functions[filepath] = set()
@@ -59,20 +68,20 @@ class DeadCodeAnalyzer:
         for node in ast.walk(tree):
             # Сбор экспортов (функции и классы верхнего уровня)
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                if node.parent and not isinstance(node.parent, ast.ClassDef):  # Только функции верхнего уровня
+                if not isinstance(node.parent, ast.ClassDef):  # Только функции верхнего уровня
                     self.file_exports[filepath].add(node.name)
                     self.defined_functions[filepath].add(node.name)
-            
+
             elif isinstance(node, ast.ClassDef):
                 self.file_exports[filepath].add(node.name)
                 self.defined_classes[filepath].add(node.name)
-                
+
                 # Специальные методы классов считаем используемыми
                 for item in node.body:
                     if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
                         if item.name in self.special_methods:
                             self.used_functions[filepath].add(f"{node.name}.{item.name}")
-            
+
             # Сбор импортов
             elif isinstance(node, ast.Import):
                 for alias in node.names:
@@ -81,20 +90,20 @@ class DeadCodeAnalyzer:
                     if source_module not in self.file_imports[filepath]:
                         self.file_imports[filepath][source_module] = set()
                     self.file_imports[filepath][source_module].add(imported_name)
-            
+
             elif isinstance(node, ast.ImportFrom):
                 module = node.module or ""
                 level = node.level  # Уровень относительного импорта
                 source_module = self._resolve_relative_import(filepath, module, level, project_dir)
-                
+
                 for alias in node.names:
                     imported_name = alias.asname or alias.name
                     full_import = f"{module}.{alias.name}" if module else alias.name
-                    
+
                     if source_module not in self.file_imports[filepath]:
                         self.file_imports[filepath][source_module] = set()
                     self.file_imports[filepath][source_module].add(imported_name)
-                    
+
                     # Если импортируется всё (from module import *)
                     if alias.name == "*":
                         if source_module in self.file_exports:

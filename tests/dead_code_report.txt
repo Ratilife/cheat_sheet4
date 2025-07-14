@@ -1,0 +1,28 @@
+=== Анализ мертвого кода ===
+
+=== Неиспользуемые импорты ===
+
+=== Неиспользуемые функции ===
+
+=== Неиспользуемые классы ===
+F:\Языки\Python\Partfolio\cheat_sheet4\cheat_sheet\srs\start_panel\models\model.py:
+  - ButtonListModel
+  - IButtonModel
+  - ButtonModel
+
+F:\Языки\Python\Partfolio\cheat_sheet4\cheat_sheet\srs\start_panel\views\view.py:
+  - MainWindow
+
+F:\Языки\Python\Partfolio\cheat_sheet4\cheat_sheet\srs\start_panel\views\view_delete_buttons.py:
+  - DeleteButtonsDialog
+
+F:\Языки\Python\Partfolio\cheat_sheet4\cheat_sheet\srs\start_panel\view_models\view_model.py:
+  - ButtonViewModel
+  - MetaQObjectABC
+  - IButtonViewModel
+
+F:\Языки\Python\Partfolio\cheat_sheet4\cheat_sheet\srs\start_panel\view_models\view_model_delete_buttons.py:
+  - DeleteButtonsViewModel
+
+
+=== Неиспользуемые переменные ===

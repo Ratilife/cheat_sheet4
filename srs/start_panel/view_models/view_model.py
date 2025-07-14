@@ -64,6 +64,3 @@ class ButtonViewModel(IButtonViewModel, QObject,  metaclass=MetaQObjectABC):
         """
         self._model.save_buttons()
 
-    def remove_button_list(self, indices: List[int]):
-        self._model.remove_button_list(indices)  # Передаём индексы в модель
-        self.buttonsChanged.emit()

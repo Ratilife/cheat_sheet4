@@ -200,6 +200,32 @@ class DeadCodeAnalyzer:
         
         return report
 
+    def _resolve_relative_import(self, filepath: str, module: str, level: int, project_dir: str) -> str:
+        """Преобразует относительный импорт в абсолютный путь к модулю"""
+        if level == 0:
+            return module
+
+        current_dir = os.path.dirname(filepath)
+        for _ in range(level - 1):
+            current_dir = os.path.dirname(current_dir)
+
+        if not module:
+            module_path = os.path.join(current_dir, "__init__.py")
+        else:
+            module_path = os.path.join(current_dir, *module.split('.')) + ".py"
+
+        # Ищем ближайший существующий файл
+        while not os.path.exists(module_path):
+            if module_path.endswith("__init__.py"):
+                module_path = os.path.join(os.path.dirname(module_path), "__init__.py")
+            else:
+                parent_dir = os.path.dirname(module_path)
+                if parent_dir == os.path.dirname(parent_dir):  # Достигли корня
+                    return module  # Возвращаем исходное имя модуля, если не нашли файл
+                module_path = os.path.join(os.path.dirname(parent_dir), "__init__.py")
+
+        return module_path
+
     def save_report_to_file(self, report: Dict[str, Dict[str, List[Tuple[str, int, int]]]], output_file: str):
         """Сохраняет отчет в файл с указанием позиции в коде"""
         with open(output_file, 'w', encoding='utf-8') as f:

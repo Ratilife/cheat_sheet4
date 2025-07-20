@@ -1,28 +1,84 @@
 === Анализ мертвого кода ===
 
-=== Неиспользуемые импорты ===
-
 === Неиспользуемые функции ===
+
+=== Неиспользуемые методы ===
+F:\Языки\Python\Partfolio\cheat_sheet4\cheat_sheet\srs\start_panel\models\model.py:
+  Класс IButtonModel:
+    - get_buttons (строка 10, позиция 4)
+    - add_button (строка 13, позиция 4)
+    - remove_button (строка 16, позиция 4)
+    - save_buttons (строка 19, позиция 4)
+    - load_buttons (строка 22, позиция 4)
+  Класс ButtonListModel:
+    - is_button_name_unique (строка 47, позиция 4)
+    - add_button (строка 56, позиция 4)
+    - get_buttons (строка 71, позиция 4)
+    - get_button (строка 79, позиция 4)
+    - remove_button_list (строка 89, позиция 4)
+    - remove_button (строка 100, позиция 4)
+    - edit_button (строка 108, позиция 4)
+    - is_valid_button (строка 119, позиция 4)
+    - sort_buttons (строка 129, позиция 4)
+    - save_buttons (строка 136, позиция 4)
+    - load_buttons (строка 144, позиция 4)
+
+F:\Языки\Python\Partfolio\cheat_sheet4\cheat_sheet\srs\start_panel\views\view.py:
+  Класс MainWindow:
+    - add_button_clicked (строка 122, позиция 4)
+    - close_panel (строка 146, позиция 4)
+    - update_buttons (строка 152, позиция 4)
+    - load_icon_from_base64 (строка 188, позиция 4)
+    - mousePressEvent (строка 214, позиция 4)
+    - mouseMoveEvent (строка 223, позиция 4)
+    - mouseReleaseEvent (строка 231, позиция 4)
+    - set_initial_position (строка 238, позиция 4)
+    - closeEvent (строка 252, позиция 4)
+    - delete_button_clicked (строка 260, позиция 4)
+
+F:\Языки\Python\Partfolio\cheat_sheet4\cheat_sheet\srs\start_panel\views\view_delete_buttons.py:
+  Класс DeleteButtonsDialog:
+    - update_table (строка 49, позиция 4)
+    - get_selected_buttons (строка 70, позиция 4)
+    - _on_checkbox_state_changed (строка 73, позиция 4)
+    - on_ok_clicked (строка 84, позиция 4)
+
+F:\Языки\Python\Partfolio\cheat_sheet4\cheat_sheet\srs\start_panel\view_models\view_model.py:
+  Класс IButtonViewModel:
+    - get_buttons (строка 9, позиция 4)
+    - add_button (строка 12, позиция 4)
+    - execute_program (строка 15, позиция 4)
+  Класс ButtonViewModel:
+    - add_button (строка 29, позиция 4)
+    - get_buttons (строка 34, позиция 4)
+    - execute_program (строка 38, позиция 4)
+    - remove_button (строка 45, позиция 4)
+    - edit_button (строка 49, позиция 4)
+    - sort_buttons (строка 54, позиция 4)
+    - is_valid_button (строка 58, позиция 4)
+    - save_buttons (строка 61, позиция 4)
+
+F:\Языки\Python\Partfolio\cheat_sheet4\cheat_sheet\srs\start_panel\view_models\view_model_delete_buttons.py:
+  Класс DeleteButtonsViewModel:
+    - get_buttons (строка 14, позиция 4)
+    - toggle_selection (строка 20, позиция 4)
+    - get_selected_buttons (строка 28, позиция 4)
+    - get_all_buttons (строка 32, позиция 4)
+    - get_selected_indices (строка 38, позиция 4)
+    - get_selected_buttons_index (строка 46, позиция 4)
+    - remove_button_list (строка 53, позиция 4)
+
 
 === Неиспользуемые классы ===
 F:\Языки\Python\Partfolio\cheat_sheet4\cheat_sheet\srs\start_panel\models\model.py:
-  - ButtonListModel
-  - IButtonModel
-  - ButtonModel
-
-F:\Языки\Python\Partfolio\cheat_sheet4\cheat_sheet\srs\start_panel\views\view.py:
-  - MainWindow
+  - ButtonListModel (строка 33, позиция 0)
 
 F:\Языки\Python\Partfolio\cheat_sheet4\cheat_sheet\srs\start_panel\views\view_delete_buttons.py:
-  - DeleteButtonsDialog
+  - DeleteButtonsDialog (строка 6, позиция 0)
 
 F:\Языки\Python\Partfolio\cheat_sheet4\cheat_sheet\srs\start_panel\view_models\view_model.py:
-  - ButtonViewModel
-  - MetaQObjectABC
-  - IButtonViewModel
+  - ButtonViewModel (строка 21, позиция 0)
 
 F:\Языки\Python\Partfolio\cheat_sheet4\cheat_sheet\srs\start_panel\view_models\view_model_delete_buttons.py:
-  - DeleteButtonsViewModel
+  - DeleteButtonsViewModel (строка 5, позиция 0)
 
-
-=== Неиспользуемые переменные ===

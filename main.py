@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QApplication
 from srs.start_panel.views.view import MainWindow
 from srs.start_panel.view_models.view_model import ButtonViewModel
 from srs.start_panel.models.model import ButtonListModel
-from tests.dead_code_analyzer import DeadCodeAnalyzer
+from tests.dead_code_analyzer_old2 import DeadCodeAnalyzer
 
 def start():
     app = QApplication([])

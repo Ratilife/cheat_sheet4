@@ -86,7 +86,7 @@ class ButtonListModel(IButtonModel):
         if 0 <= index < len(self._buttons):
             return self._buttons[index]
         return None
-    def remove_button_list(self, indices: List[int]):
+    def remove_button_list(self, indices: List[int]):  #TODO мертвый код
         #возможно удалить
         """
         Удаляет несколько кнопок из списка по указанным индексам.

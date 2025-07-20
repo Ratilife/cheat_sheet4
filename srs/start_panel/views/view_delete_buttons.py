@@ -70,7 +70,7 @@ class DeleteButtonsDialog(QDialog):
     def get_selected_buttons(self) -> List[str]:
         """Возвращает выбранные для удаления кнопки"""
         return self.view_model.get_selected_buttons()   # Возвращает список выбранных кнопок
-    def _on_checkbox_state_changed(self, state: int, name: str):
+    def _on_checkbox_state_changed(self, state: int, name: str):  #TODO мертвый код
         """
         Обрабатывает изменение состояния чекбокса.
     
@@ -81,7 +81,7 @@ class DeleteButtonsDialog(QDialog):
         self.view_model.set_selected(name, is_selected)
 
     
-    def on_ok_clicked(self):
+    def on_ok_clicked(self):   #TODO мертвый код
        self.accept()
                  
     

@@ -1,5 +1,5 @@
 from typing import List
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod,ABCMeta
 from srs.start_panel.models.model import IButtonModel
 from PySide6.QtCore import QObject, Signal
 
@@ -15,7 +15,7 @@ class IButtonViewModel(ABC):
     def execute_program(self, index: int): ...
 
 # Создаем комбинированный метакласс, который объединяет QObject и ABC
-class MetaQObjectABC(type(QObject), ABC):
+class MetaQObjectABC(type(QObject), ABCMeta):
     pass
 
 class ButtonViewModel(IButtonViewModel, QObject,  metaclass=MetaQObjectABC):

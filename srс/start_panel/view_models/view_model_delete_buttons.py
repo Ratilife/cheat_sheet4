@@ -44,12 +44,5 @@ class DeleteButtonsViewModel(QObject):
                 selected_indices.append(i)
         return selected_indices
 
-    def get_selected_buttons_index(self) -> List[str]:      #TODO мертвый код
-        # возможно удалить
-        return self._delete_model.get_selected_buttons_index()
 
 
-
-    #описать метод на удаление 
-    def remove_button_list(self,list):      #TODO мертвый код
-        return self._model.remove_button_list(list)

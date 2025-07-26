@@ -1,10 +1,10 @@
 from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget, QInputDialog, QHBoxLayout, QStyle, QDialog
 from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtCore import QByteArray, QBuffer, QIODevice, QSize, Qt, QPoint
-from srs.start_panel.models.model import ButtonListModel
-from srs.start_panel.views.view_delete_buttons import DeleteButtonsDialog
-from srs.start_panel.view_models.view_model_delete_buttons import DeleteButtonsViewModel
-from srs.start_panel.view_models.view_model import ButtonViewModel, IButtonViewModel
+from srс.start_panel.models.model import ButtonListModel
+from srс.start_panel.views.view_delete_buttons import DeleteButtonsDialog
+from srс.start_panel.view_models.view_model_delete_buttons import DeleteButtonsViewModel
+from srс.start_panel.view_models.view_model import ButtonViewModel, IButtonViewModel
 import base64
 import sys
 

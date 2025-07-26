@@ -86,15 +86,7 @@ class ButtonListModel(IButtonModel):
         if 0 <= index < len(self._buttons):
             return self._buttons[index]
         return None
-    def remove_button_list(self, indices: List[int]):  #TODO мертвый код
-        #возможно удалить
-        """
-        Удаляет несколько кнопок из списка по указанным индексам.
-        :param indices: Список индексов кнопок для удаления.
-        """
-        # Сортируем индексы в обратном порядке, чтобы избежать смещения при удалении
-        for index in sorted(indices, reverse=True):
-            self.remove_button(index)
+
 
 
     def remove_button(self, index: int):

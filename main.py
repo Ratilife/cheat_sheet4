@@ -1,9 +1,9 @@
 import sys
 from PySide6.QtWidgets import QApplication
-from srs.start_panel.views.view import MainWindow
-from srs.start_panel.view_models.view_model import ButtonViewModel
-from srs.start_panel.models.model import ButtonListModel
-from tests.dead_code_analyzer_old2 import DeadCodeAnalyzer
+from src.start_panel.views.view import MainWindow
+from src.start_panel.view_models.view_model import ButtonViewModel
+from src.start_panel.models.model import ButtonListModel
+
 
 def start():
     app = QApplication([])
@@ -21,11 +21,12 @@ def start():
     sys.exit(app.exec())
 
 if __name__ == '__main__':
-    #start() раскоментировать после отладки
+    start()
+    '''
     analyzer = DeadCodeAnalyzer()
     analyzer.analyze_project(r"F:\Языки\Python\Partfolio\cheat_sheet4\cheat_sheet\srs\start_panel")  # Укажите реальный путь
     report = analyzer.get_unused_code_report()
     analyzer.save_report_to_file(report, "dead_code_report_Отладка.txt")
-
+    '''
 
 

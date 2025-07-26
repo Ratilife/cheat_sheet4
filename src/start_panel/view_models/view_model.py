@@ -1,6 +1,6 @@
 from typing import List
 from abc import ABC, abstractmethod,ABCMeta
-from srs.start_panel.models.model import IButtonModel
+from src.start_panel.models.model import IButtonModel
 from PySide6.QtCore import QObject, Signal
 
 

@@ -1,6 +1,6 @@
 from typing import Dict, List, Set
 from PySide6.QtCore import QObject, Signal
-from srs.start_panel.models.model import ButtonModel
+from src.start_panel.models.model import ButtonModel
 
 class DeleteButtonsViewModel(QObject):
     def __init__(self, model):
